@@ -1,0 +1,21 @@
+# ---- Node / frontend ----
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# ---- Java / backend ----
+backend/target/
+*.class
+
+# ---- Database H2 local (KHÔNG đẩy dữ liệu máy mình lên) ----
+backend/data/
+
+# ---- Artefact rác từ phiên test trình duyệt (Playwright MCP) ----
+.playwright-mcp/
+
+# ---- IDE / OS ----
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

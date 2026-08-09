@@ -1,0 +1,44 @@
+# =====================================================================
+# Render Blueprint: mô tả sẵn 1 web service + 1 database Postgres.
+# Trên Render bấm "New +" -> "Blueprint" -> chọn repo này, Render sẽ tự
+# đọc file này, tạo cả 2 và tự nối thông tin database vào app.
+# =====================================================================
+
+databases:
+  - name: vocab-db
+    databaseName: vocabdb
+    user: vocab
+    plan: free
+
+services:
+  - type: web
+    name: vocabmaster
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/sets
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # Các biến DB_* được tự lấy từ database vocab-db ở trên.
+      - key: DB_HOST
+        fromDatabase:
+          name: vocab-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: vocab-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: vocab-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: vocab-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: vocab-db
+          property: password

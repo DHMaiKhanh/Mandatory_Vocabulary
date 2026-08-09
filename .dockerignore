@@ -1,0 +1,10 @@
+# Không copy những thứ nặng / không cần vào Docker build (build nhanh hơn).
+**/node_modules
+frontend/dist
+backend/target
+backend/data
+.git
+.idea
+.vscode
+*.png
+*.md
