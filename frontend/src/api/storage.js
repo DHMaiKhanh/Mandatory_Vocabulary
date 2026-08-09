@@ -55,11 +55,12 @@ const local = {
   loadSets() {
     return lsRead().sets
   },
-  createSet(name) {
+  createSet(name, type) {
     const data = lsRead()
     const set = {
       id: data.seq++,
       name: name?.trim() || 'Bộ từ mới',
+      type: type || null,
       createdAt: Date.now(),
       words: [],
     }
@@ -79,7 +80,7 @@ const local = {
     data.sets = data.sets.filter((s) => s.id !== id)
     lsWrite(data)
   },
-  addWord(setId, { term, meaning, example }) {
+  addWord(setId, { term, meaning, example, note, category }) {
     const data = lsRead()
     const set = data.sets.find((s) => s.id === setId)
     if (!set) return null
@@ -89,6 +90,8 @@ const local = {
       term: (term || '').trim(),
       meaning: (meaning || '').trim(),
       example: (example || '').trim(),
+      note: (note || '').trim(),
+      category: (category || '').trim(),
       box: 0,
       reps: 0,
       correct: 0,
@@ -139,7 +142,7 @@ async function http(path, options) {
 
 const api = {
   loadSets: () => http('/sets'),
-  createSet: (name) => http('/sets', { method: 'POST', body: JSON.stringify({ name }) }),
+  createSet: (name, type) => http('/sets', { method: 'POST', body: JSON.stringify({ name, type }) }),
   renameSet: (id, name) =>
     http(`/sets/${id}`, { method: 'PUT', body: JSON.stringify({ name }) }),
   deleteSet: (id) => http(`/sets/${id}`, { method: 'DELETE' }),
@@ -168,7 +171,7 @@ function impl() {
 }
 
 export const loadSets = () => impl().loadSets()
-export const createSet = (name) => impl().createSet(name)
+export const createSet = (name, type) => impl().createSet(name, type)
 export const renameSet = (id, name) => impl().renameSet(id, name)
 export const deleteSet = (id) => impl().deleteSet(id)
 export const addWord = (setId, body) => impl().addWord(setId, body)

@@ -11,7 +11,7 @@ import {
 } from '../lib/srs'
 
 export default function Daily({ go }) {
-  const { sets, updateWord } = useVocab()
+  const { studySets: sets, updateWord } = useVocab()
 
   // Build the session once when the view opens.
   const initialQueue = useMemo(() => {

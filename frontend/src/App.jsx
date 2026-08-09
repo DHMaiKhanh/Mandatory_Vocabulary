@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { VocabProvider, useVocab } from './store'
 import Dashboard from './views/Dashboard'
 import Sets from './views/Sets'
+import MyVocab from './views/MyVocab'
 import Daily from './views/Daily'
 import Games from './views/Games'
 import Stats from './views/Stats'
@@ -9,6 +10,7 @@ import Stats from './views/Stats'
 const TABS = [
   { id: 'dashboard', label: 'Trang chủ', icon: '🏠' },
   { id: 'sets', label: 'Bộ từ', icon: '📚' },
+  { id: 'myvocab', label: 'Từ vựng của tôi', icon: '🗒️' },
   { id: 'daily', label: 'Học hôm nay', icon: '🎯' },
   { id: 'games', label: 'Trò chơi', icon: '🎮' },
   { id: 'stats', label: 'Thống kê', icon: '📊' },
@@ -63,6 +65,7 @@ function Shell() {
           <>
             {view === 'dashboard' && <Dashboard {...viewProps} />}
             {view === 'sets' && <Sets {...viewProps} />}
+            {view === 'myvocab' && <MyVocab {...viewProps} />}
             {view === 'daily' && <Daily {...viewProps} />}
             {view === 'games' && <Games {...viewProps} />}
             {view === 'stats' && <Stats {...viewProps} />}

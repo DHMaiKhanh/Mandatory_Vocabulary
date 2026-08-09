@@ -17,7 +17,7 @@ const COLUMNS = [
 ]
 
 export default function Stats() {
-  const { sets } = useVocab()
+  const { studySets: sets } = useVocab()
   const stats = computeStats(sets)
   const [sort, setSort] = useState({ key: 'addedAt', dir: 'desc' })
   const [q, setQ] = useState('')

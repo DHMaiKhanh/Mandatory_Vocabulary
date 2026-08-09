@@ -59,7 +59,7 @@ function WordItem({ word, onSave, onDelete }) {
 }
 
 export default function Sets({ toast }) {
-  const { sets, createSet, renameSet, deleteSet, addWord, updateWord, deleteWord } = useVocab()
+  const { studySets: sets, createSet, renameSet, deleteSet, addWord, updateWord, deleteWord } = useVocab()
   const [selectedId, setSelectedId] = useState(sets[0]?.id ?? null)
 
   useEffect(() => {

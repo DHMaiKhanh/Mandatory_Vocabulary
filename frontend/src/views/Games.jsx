@@ -11,7 +11,7 @@ const GAMES = [
 ]
 
 export default function Games() {
-  const { sets } = useVocab()
+  const { studySets: sets } = useVocab()
   const [setId, setSetId] = useState(sets[0]?.id ?? null)
   const [game, setGame] = useState(null)
 

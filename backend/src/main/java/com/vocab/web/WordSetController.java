@@ -18,8 +18,8 @@ public class WordSetController {
         this.sets = sets;
     }
 
-    public record SetRequest(String name) {}
-    public record WordRequest(String term, String meaning, String example) {}
+    public record SetRequest(String name, String type) {}
+    public record WordRequest(String term, String meaning, String example, String note, String category) {}
 
     @GetMapping
     public List<WordSet> all() {
@@ -34,7 +34,8 @@ public class WordSetController {
     @PostMapping
     public WordSet create(@RequestBody SetRequest req) {
         String name = (req.name() == null || req.name().isBlank()) ? "Bộ từ mới" : req.name().trim();
-        return sets.save(new WordSet(name, System.currentTimeMillis()));
+        String type = (req.type() == null || req.type().isBlank()) ? null : req.type().trim();
+        return sets.save(new WordSet(name, System.currentTimeMillis(), type));
     }
 
     @PutMapping("/{id}")
@@ -62,6 +63,8 @@ public class WordSetController {
             w.setTerm(req.term() == null ? "" : req.term().trim());
             w.setMeaning(req.meaning() == null ? "" : req.meaning().trim());
             w.setExample(req.example() == null ? "" : req.example().trim());
+            w.setNote(req.note() == null ? "" : req.note().trim());
+            w.setCategory(req.category() == null ? "" : req.category().trim());
             w.setStatus("new");
             long now = System.currentTimeMillis();
             w.setAddedAt(now);

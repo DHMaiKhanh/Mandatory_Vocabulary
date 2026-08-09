@@ -20,6 +20,14 @@ public class Word {
     @Column(columnDefinition = "TEXT")
     private String example;
 
+    /** Free-form pronunciation / reading note, e.g. "chờ lai" for "July". */
+    @Column(columnDefinition = "TEXT")
+    private String note;
+
+    /** Topic/category for personal vocabulary, e.g. "Tháng", "Động vật". */
+    @Column(columnDefinition = "TEXT")
+    private String category;
+
     // Spaced-repetition (Leitner) state
     private int box = 0;
     private int reps = 0;
@@ -52,6 +60,12 @@ public class Word {
 
     public String getExample() { return example; }
     public void setExample(String example) { this.example = example; }
+
+    public String getNote() { return note; }
+    public void setNote(String note) { this.note = note; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
     public int getBox() { return box; }
     public void setBox(int box) { this.box = box; }

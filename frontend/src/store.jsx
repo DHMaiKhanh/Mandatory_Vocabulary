@@ -23,8 +23,8 @@ export function VocabProvider({ children }) {
   }, [reload])
 
   // ---- Set operations (optimistic where useful) ----
-  const createSet = useCallback(async (name) => {
-    const set = await storage.createSet(name)
+  const createSet = useCallback(async (name, type) => {
+    const set = await storage.createSet(name, type)
     setSets((prev) => [...prev, { ...set, words: set.words || [] }])
     return set
   }, [])
@@ -68,8 +68,15 @@ export function VocabProvider({ children }) {
     await storage.deleteWord(id)
   }, [])
 
+  // Personal notebook ("Từ vựng của tôi") is kept separate from the TOEIC
+  // study sets so it never mixes into daily study, games or stats.
+  const personalSets = sets.filter((s) => s.type === 'personal')
+  const studySets = sets.filter((s) => s.type !== 'personal')
+
   const value = {
     sets,
+    studySets,
+    personalSets,
     loading,
     mode,
     reload,

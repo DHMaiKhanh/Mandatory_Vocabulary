@@ -26,6 +26,8 @@ public class WordController {
             if (patch.getTerm() != null) w.setTerm(patch.getTerm());
             if (patch.getMeaning() != null) w.setMeaning(patch.getMeaning());
             if (patch.getExample() != null) w.setExample(patch.getExample());
+            if (patch.getNote() != null) w.setNote(patch.getNote());
+            if (patch.getCategory() != null) w.setCategory(patch.getCategory());
             if (patch.getStatus() != null) w.setStatus(patch.getStatus());
             w.setBox(patch.getBox());
             w.setReps(patch.getReps());

@@ -8,7 +8,7 @@ import {
 } from '../lib/srs'
 
 export default function Dashboard({ go }) {
-  const { sets } = useVocab()
+  const { studySets: sets } = useVocab()
   const stats = computeStats(sets)
   const introduced = getIntroducedToday()
   const { newWords, reviewWords } = buildDailySession(sets, Date.now(), introduced)
