@@ -12,7 +12,9 @@ function VocabItem({ word, categories, onSave, onDelete }) {
   const [note, setNote] = useState(word.note || '')
   const [meaning, setMeaning] = useState(word.meaning || '')
   const [example, setExample] = useState(word.example || '')
+  const [exampleMeaning, setExampleMeaning] = useState(word.exampleMeaning || '')
   const [category, setCategory] = useState(word.category || '')
+  const [pos, setPos] = useState(word.pos || '')
 
   const save = () => {
     if (!term.trim()) return
@@ -22,7 +24,9 @@ function VocabItem({ word, categories, onSave, onDelete }) {
       note: note.trim(),
       meaning: meaning.trim(),
       example: example.trim(),
+      exampleMeaning: exampleMeaning.trim(),
       category: category.trim(),
+      pos: pos.trim(),
     })
     setEditing(false)
   }
@@ -32,7 +36,9 @@ function VocabItem({ word, categories, onSave, onDelete }) {
     setNote(word.note || '')
     setMeaning(word.meaning || '')
     setExample(word.example || '')
+    setExampleMeaning(word.exampleMeaning || '')
     setCategory(word.category || '')
+    setPos(word.pos || '')
     setEditing(false)
   }
 
@@ -44,7 +50,16 @@ function VocabItem({ word, categories, onSave, onDelete }) {
           <input className="input" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Cách đọc / note (vd: chờ lai)" />
         </div>
         <div className="add-word-grid" style={{ marginTop: 8 }}>
+          <input
+            className="input"
+            list="mv-pos-list"
+            value={pos}
+            onChange={(e) => setPos(e.target.value)}
+            placeholder="Từ loại (vd: Danh từ)"
+          />
           <input className="input" value={meaning} onChange={(e) => setMeaning(e.target.value)} placeholder="Nghĩa (vd: Tháng 7)" />
+        </div>
+        <div className="add-word-grid" style={{ marginTop: 8 }}>
           <input
             className="input"
             list="mv-cat-list"
@@ -59,6 +74,13 @@ function VocabItem({ word, categories, onSave, onDelete }) {
           value={example}
           onChange={(e) => setExample(e.target.value)}
           placeholder="Câu ví dụ (tuỳ chọn)"
+        />
+        <input
+          className="input"
+          style={{ marginTop: 8 }}
+          value={exampleMeaning}
+          onChange={(e) => setExampleMeaning(e.target.value)}
+          placeholder="Nghĩa câu ví dụ (tuỳ chọn)"
         />
         <div className="row" style={{ marginTop: 8 }}>
           <button className="btn btn-primary btn-sm" onClick={save}>Lưu</button>
@@ -77,7 +99,10 @@ function VocabItem({ word, categories, onSave, onDelete }) {
           {word.note && <span className="word-note"> ({word.note})</span>}
         </span>
       </div>
-      <div className="word-mean">{word.meaning || <span className="muted">(chưa có nghĩa)</span>}</div>
+      <div className="word-mean">
+        {word.pos && <em className="muted" style={{ marginRight: 6 }}>({word.pos})</em>}
+        {word.meaning || <span className="muted">(chưa có nghĩa)</span>}
+      </div>
       <div className="word-actions">
         <button className="icon-btn" title="Sửa" onClick={() => setEditing(true)}>✏️</button>
         <button className="icon-btn" title="Xoá" onClick={() => onDelete(word.id)}>🗑️</button>
@@ -85,7 +110,10 @@ function VocabItem({ word, categories, onSave, onDelete }) {
       {word.example && (
         <div className="word-example">
           <SpeakButton text={word.example} size="sm" title="Nghe câu ví dụ" />
-          <span>“{word.example}”</span>
+          <span>
+            “{word.example}”
+            {word.exampleMeaning && <span className="muted"> — {word.exampleMeaning}</span>}
+          </span>
         </div>
       )}
     </div>
@@ -102,7 +130,9 @@ export default function MyVocab({ toast }) {
   const [note, setNote] = useState('')
   const [meaning, setMeaning] = useState('')
   const [example, setExample] = useState('')
+  const [exampleMeaning, setExampleMeaning] = useState('')
   const [category, setCategory] = useState('')
+  const [pos, setPos] = useState('')
 
   // browsing
   const [filter, setFilter] = useState('__all__')
@@ -150,12 +180,16 @@ export default function MyVocab({ toast }) {
       note,
       meaning,
       example,
+      exampleMeaning,
       category: category.trim(),
+      pos: pos.trim(),
     })
     setTerm('')
     setNote('')
     setMeaning('')
     setExample('')
+    setExampleMeaning('')
+    setPos('')
     // keep `category` so adding several words to the same topic is quick
     toast?.('Đã lưu từ vào sổ tay ✓')
   }
@@ -179,6 +213,16 @@ export default function MyVocab({ toast }) {
         ))}
       </datalist>
 
+      {/* part-of-speech suggestions for all inputs */}
+      <datalist id="mv-pos-list">
+        <option value="Danh từ" />
+        <option value="Động từ" />
+        <option value="Tính từ" />
+        <option value="Trạng từ" />
+        <option value="Giới từ" />
+        <option value="Cụm động từ" />
+      </datalist>
+
       <div className="card card-pad mb">
         <h3 style={{ marginTop: 0 }}>+ Thêm từ vào sổ tay</h3>
         <form onSubmit={handleAdd}>
@@ -194,9 +238,21 @@ export default function MyVocab({ toast }) {
           </div>
           <div className="add-word-grid" style={{ marginTop: 12 }}>
             <div className="field">
+              <label>Từ loại</label>
+              <input
+                className="input"
+                list="mv-pos-list"
+                value={pos}
+                onChange={(e) => setPos(e.target.value)}
+                placeholder="ví dụ: Danh từ / Động từ / Tính từ"
+              />
+            </div>
+            <div className="field">
               <label>Nghĩa</label>
               <input className="input" value={meaning} onChange={(e) => setMeaning(e.target.value)} placeholder="ví dụ: Tháng 7" />
             </div>
+          </div>
+          <div className="add-word-grid" style={{ marginTop: 12 }}>
             <div className="field">
               <label>Chủ đề (category)</label>
               <input
@@ -215,6 +271,15 @@ export default function MyVocab({ toast }) {
               value={example}
               onChange={(e) => setExample(e.target.value)}
               placeholder="ví dụ: My birthday is in July."
+            />
+          </div>
+          <div className="field" style={{ marginTop: 12 }}>
+            <label>Nghĩa câu ví dụ (tuỳ chọn)</label>
+            <input
+              className="input"
+              value={exampleMeaning}
+              onChange={(e) => setExampleMeaning(e.target.value)}
+              placeholder="ví dụ: Sinh nhật của tôi vào tháng 7."
             />
           </div>
           <button className="btn btn-primary mt" type="submit" disabled={!term.trim()}>

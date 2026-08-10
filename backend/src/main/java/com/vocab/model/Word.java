@@ -20,6 +20,10 @@ public class Word {
     @Column(columnDefinition = "TEXT")
     private String example;
 
+    /** Vietnamese meaning / translation of the example sentence. */
+    @Column(columnDefinition = "TEXT")
+    private String exampleMeaning;
+
     /** Free-form pronunciation / reading note, e.g. "chờ lai" for "July". */
     @Column(columnDefinition = "TEXT")
     private String note;
@@ -27,6 +31,10 @@ public class Word {
     /** Topic/category for personal vocabulary, e.g. "Tháng", "Động vật". */
     @Column(columnDefinition = "TEXT")
     private String category;
+
+    /** Part of speech, e.g. "Danh từ", "Động từ", "Tính từ". */
+    @Column(columnDefinition = "TEXT")
+    private String pos;
 
     // Spaced-repetition (Leitner) state
     private int box = 0;
@@ -61,11 +69,17 @@ public class Word {
     public String getExample() { return example; }
     public void setExample(String example) { this.example = example; }
 
+    public String getExampleMeaning() { return exampleMeaning; }
+    public void setExampleMeaning(String exampleMeaning) { this.exampleMeaning = exampleMeaning; }
+
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
+
+    public String getPos() { return pos; }
+    public void setPos(String pos) { this.pos = pos; }
 
     public int getBox() { return box; }
     public void setBox(int box) { this.box = box; }

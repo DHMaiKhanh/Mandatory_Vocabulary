@@ -80,7 +80,7 @@ const local = {
     data.sets = data.sets.filter((s) => s.id !== id)
     lsWrite(data)
   },
-  addWord(setId, { term, meaning, example, note, category }) {
+  addWord(setId, { term, meaning, example, exampleMeaning, note, category, pos }) {
     const data = lsRead()
     const set = data.sets.find((s) => s.id === setId)
     if (!set) return null
@@ -90,8 +90,10 @@ const local = {
       term: (term || '').trim(),
       meaning: (meaning || '').trim(),
       example: (example || '').trim(),
+      exampleMeaning: (exampleMeaning || '').trim(),
       note: (note || '').trim(),
       category: (category || '').trim(),
+      pos: (pos || '').trim(),
       box: 0,
       reps: 0,
       correct: 0,

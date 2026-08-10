@@ -19,7 +19,7 @@ public class WordSetController {
     }
 
     public record SetRequest(String name, String type) {}
-    public record WordRequest(String term, String meaning, String example, String note, String category) {}
+    public record WordRequest(String term, String meaning, String example, String exampleMeaning, String note, String category, String pos) {}
 
     @GetMapping
     public List<WordSet> all() {
@@ -63,8 +63,10 @@ public class WordSetController {
             w.setTerm(req.term() == null ? "" : req.term().trim());
             w.setMeaning(req.meaning() == null ? "" : req.meaning().trim());
             w.setExample(req.example() == null ? "" : req.example().trim());
+            w.setExampleMeaning(req.exampleMeaning() == null ? "" : req.exampleMeaning().trim());
             w.setNote(req.note() == null ? "" : req.note().trim());
             w.setCategory(req.category() == null ? "" : req.category().trim());
+            w.setPos(req.pos() == null ? "" : req.pos().trim());
             w.setStatus("new");
             long now = System.currentTimeMillis();
             w.setAddedAt(now);
